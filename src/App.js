@@ -1,7 +1,13 @@
 import Header from './components/Header';
+import FeedbackList from './components/FeedbackList';
 
 const App = () => {
-  return <Header />;
+  return (
+    <>
+      <Header />
+      <FeedbackList />
+    </>
+  );
 };
 
 export default App;
