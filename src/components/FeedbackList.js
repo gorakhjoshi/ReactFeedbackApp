@@ -1,15 +1,14 @@
-import FeedbackData from '../data/FeedbackData';
+import FeedbackItem from './FeedbackItem';
 
-function FeedbackList() {
+function FeedbackList({ feedback }) {
+  if (!feedback || feedback.length === 0) {
+    return 'No feedback found!';
+  }
+
   return (
     <div>
-      {FeedbackData.map((item) => (
-        <div key={item.id}>
-          <div className='card'>
-            <h2>{item.rating}</h2>
-            <p>{item.text}</p>
-          </div>
-        </div>
+      {feedback.map((item) => (
+        <FeedbackItem key={item.id} item={item} />
       ))}
     </div>
   );
