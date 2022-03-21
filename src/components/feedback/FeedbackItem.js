@@ -1,7 +1,6 @@
 import React from 'react';
 
 const FeedbackItem = ({ item }) => {
-  console.log(item);
   return (
     <div>
       <div className='card'>

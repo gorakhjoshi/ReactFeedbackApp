@@ -1,16 +1,17 @@
 import Header from './components/Header';
-import FeedbackList from './components/FeedbackList';
+import FeedbackList from './components/feedback/FeedbackList';
 import { useState } from 'react';
 import FeedbackData from './data/FeedbackData';
+import Card from './components/common/Card';
 
 const App = () => {
   const [feedback, setFeedback] = useState(FeedbackData);
 
-  console.log(feedback);
   return (
     <>
       <Header />
       <FeedbackList feedback={feedback} />
+      <Card>Hello</Card>
     </>
   );
 };
