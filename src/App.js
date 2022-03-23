@@ -11,7 +11,6 @@ const App = () => {
     <>
       <Header />
       <FeedbackList feedback={feedback} />
-      <Card>Hello</Card>
     </>
   );
 };

@@ -1,9 +1,5 @@
 import { v4 as uuidv4 } from 'uuid';
 
-console.log(uuidv4());
-
-console.log();
-
 const FeedbackData = [
   {
     id: uuidv4(),
