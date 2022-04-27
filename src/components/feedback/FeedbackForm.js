@@ -1,53 +1,64 @@
-import { useState } from 'react';
-import Card from '../common/Card';
-import Button from './../common/Button';
-import RatingSelect from './RatingSelect';
+import { useState } from 'react'
+import RatingSelect from './RatingSelect'
+import Card from '../common/Card'
+import Button from '../common/Button'
 
-const FeedbackForm = ({ addFeedback }) => {
-  const [text, setText] = useState('');
-  const [disabled, setDisabled] = useState(true);
-  const [message, setMessage] = useState('');
-  const [rating, setRating] = useState(null);
+function FeedbackForm({ handleAdd }) {
+  const [text, setText] = useState('')
+  const [rating, setRating] = useState(10)
+  const [btnDisabled, setBtnDisabled] = useState(true)
+  const [message, setMessage] = useState('')
 
-  function handleInputText(e) {
-    setText(e.target.value);
-
-    if (e.target.value === '' || e.target.value.trim().length <= 5) {
-      setDisabled(true);
-      setMessage('Text should be greater than 5 character');
+  const handleTextChange = (e) => {
+    if (text === '') {
+      setBtnDisabled(true)
+      setMessage(null)
+    } else if (text !== '' && text.trim().length <= 10) {
+      setMessage('Text must be at least 10 characters')
+      setBtnDisabled(true)
     } else {
-      setDisabled(false);
-      setMessage('');
+      setMessage(null)
+      setBtnDisabled(false)
+    }
+
+    setText(e.target.value)
+  }
+
+  const handleSubmit = (e) => {
+    e.preventDefault()
+    if (text.trim().length > 10) {
+      const newFeedback = {
+        text,
+        rating,
+      }
+
+      handleAdd(newFeedback)
+
+      setText('')
     }
   }
 
   return (
     <Card>
-      <form
-        onSubmit={(e) => {
-          e.preventDefault();
-          addFeedback({ text, rating });
-          setText('');
-          setRating(null);
-        }}
-      >
-        <h3>Please type your feedback below.</h3>
+      <form onSubmit={handleSubmit}>
+        <h2>How would you rate your service with us?</h2>
         <RatingSelect select={(rating) => setRating(rating)} />
         <div className='input-group'>
           <input
+            onChange={handleTextChange}
             type='text'
-            placeholder='Write your review'
-            onChange={handleInputText}
+            placeholder='Write a review'
             value={text}
           />
-          <Button type='submit' version='primary' isDisabled={disabled}>
+          <Button type='submit' isDisabled={btnDisabled}>
             Send
           </Button>
         </div>
-        {message && <p style={{ color: 'red' }}>{message}</p>}
+
+        {message && <div className='message'>{message}</div>}
       </form>
     </Card>
-  );
-};
+  )
+}
 
-export default FeedbackForm;
+export default FeedbackForm

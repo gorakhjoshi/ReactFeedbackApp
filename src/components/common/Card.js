@@ -1,26 +1,28 @@
-import PropTypes from 'prop-types';
+import PropTypes from 'prop-types'
 
-const Card = ({ children, isThereColor }) => {
+function Card({ children, reverse }) {
+  // return <div className={`card ${reverse && 'reverse'}`}>{children}</div>
+
   return (
     <div
       className='card'
       style={{
-        backgroundColor: isThereColor ? 'rgba(0,0,0,0.4)' : 'white',
-        color: isThereColor ? '#fff' : '#000',
+        backgroundColor: reverse ? 'rgba(0,0,0,0.4)' : '#fff',
+        color: reverse ? '#fff' : '#000',
       }}
     >
       {children}
     </div>
-  );
-};
+  )
+}
 
 Card.defaultProps = {
-  isThereColor: false,
-};
+  reverse: false,
+}
 
 Card.propTypes = {
   children: PropTypes.node.isRequired,
-  isThereColor: PropTypes.bool,
-};
+  reverse: PropTypes.bool,
+}
 
-export default Card;
+export default Card

@@ -1,40 +1,44 @@
-import Header from './components/Header';
-import FeedbackList from './components/feedback/FeedbackList';
-import { useState } from 'react';
-import FeedbackData from './data/FeedbackData';
-import FeedbackStats from './components/feedback/FeedbackStats';
-import FeedbackForm from './components/feedback/FeedbackForm';
-import { v4 as uuidv4 } from 'uuid';
+import { v4 as uuidv4 } from 'uuid'
+import { BrowserRouter as Router, Route } from 'react-router-dom'
+import { useState } from 'react'
+import Header from './components/Header'
+import FeedbackList from './components/feedback/FeedbackList'
+import FeedbackStats from './components/feedback/FeedbackStats'
+import FeedbackForm from './components/feedback/FeedbackForm'
+import AboutPage from './pages/AboutPage'
 
-const App = () => {
-  const [feedback, setFeedback] = useState(FeedbackData);
+import FeedbackData from './data/FeedbackData'
 
-  function deleteFeedback(id) {
+function App() {
+  const [feedback, setFeedback] = useState(FeedbackData)
+
+  const addFeedback = (newFeedback) => {
+    newFeedback.id = uuidv4()
+    setFeedback([newFeedback, ...feedback])
+  }
+
+  const deleteFeedback = (id) => {
     if (window.confirm('Are you sure you want to delete?')) {
-      setFeedback(
-        feedback.filter((item) => {
-          console.log(item);
-          return item.id !== id;
-        })
-      );
-    } else {
-      console.log('Nothing deleted!');
+      setFeedback(feedback.filter((item) => item.id !== id))
     }
   }
 
   return (
-    <>
+    <Router>
       <Header />
-      <FeedbackForm
-        addFeedback={(userFeedback) => {
-          userFeedback.id = uuidv4();
-          setFeedback([...feedback, userFeedback]);
-        }}
-      />
-      <FeedbackList feedback={feedback} handleDelete={deleteFeedback} />
-      <FeedbackStats feedback={feedback} />
-    </>
-  );
-};
+      <div className='container'>
+        <Route exact path='/'>
+          <FeedbackForm handleAdd={addFeedback} />
+          <FeedbackStats feedback={feedback} />
+          <FeedbackList feedback={feedback} handleDelete={deleteFeedback} />
+        </Route>
 
-export default App;
+        <Route path='/about' component={AboutPage} />
+
+
+      </div>
+    </Router>
+  )
+}
+
+export default App
