@@ -49,13 +49,13 @@ export const FeedbackProvider = ({ children }) => {
 
   useEffect(() => {
     async function fetchFeedback() {
+      setIsLoading(true);
       const response = await fetch("http://localhost:5000/feedback");
       const data = await response.json();
       setFeedback(data);
+      setIsLoading(false);
     }
-    setIsLoading(true);
     fetchFeedback();
-    setIsLoading(false);
   }, []);
 
   return (

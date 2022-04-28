@@ -4,15 +4,21 @@ import PropTypes from "prop-types";
 import FeedbackItem from "./FeedbackItem";
 
 import { FeedbackContext } from "../../context/FeedbackContext";
+import Loading from "../common/Loading";
 
 function FeedbackList() {
   const { feedback } = useContext(FeedbackContext);
+  const { isLoading } = useContext(FeedbackContext);
+
+  console.log(isLoading);
 
   if (!feedback || feedback.length === 0) {
     return <p>No Feedback Yet</p>;
   }
 
-  return (
+  return isLoading ? (
+    <Loading />
+  ) : (
     <div className="feedback-list">
       <AnimatePresence>
         {feedback.map((item) => (

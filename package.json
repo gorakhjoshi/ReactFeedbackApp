@@ -15,7 +15,7 @@
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
-    "server": "json-server --watch db.json --port 5000",
+    "server": "json-server --watch db.json --port 5000 --delay 3000",
     "dev": "concurrently \"npm run server\" \"npm start\""
   },
   "eslintConfig": {
